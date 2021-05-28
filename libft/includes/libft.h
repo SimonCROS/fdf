@@ -696,7 +696,7 @@ t_list		*lst_slice(t_list *list, int start, int end);
  * 
  * @param list the list
  * @param element the element to insert
- * @return the new size of list
+ * @return the element if success, NULL otherwise
  */
 void		*lst_unshift(t_list *list, void *element);
 /**

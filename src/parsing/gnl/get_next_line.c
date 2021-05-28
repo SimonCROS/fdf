@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "fdf.h"
 
 static int	free_gnl(int ret, t_gnl_entry **remain, t_gnl_entry *element,
 	void *p)

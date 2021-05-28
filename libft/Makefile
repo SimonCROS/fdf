@@ -1,32 +1,3 @@
-# Styles
-
-override _RESET		:= \033[0m
-override _BOLD		:= \033[1m
-override _UNDER		:= \033[4m
-override _REV		:= \033[7m
-
-# Colors
-
-override _GREY		:= \033[30m
-override _RED		:= \033[31m
-override _GREEN		:= \033[32m
-override _YELLOW	:= \033[33m
-override _BLUE		:= \033[34m
-override _PURPLE	:= \033[35m
-override _CYAN		:= \033[36m
-override _WHITE		:= \033[37m
-
-# Backgrounds
-
-override _IGREY		:= \033[40m
-override _IRED		:= \033[41m
-override _IGREEN	:= \033[42m
-override _IYELLOW	:= \033[43m
-override _IBLUE		:= \033[44m
-override _IPURPLE	:= \033[45m
-override _ICYAN		:= \033[46m
-override _IWHITE	:= \033[47m
-
 # Folders
 
 override BIN		:= bin

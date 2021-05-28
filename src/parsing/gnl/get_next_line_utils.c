@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "fdf.h"
 
 char	**ft_split_first(char *s, char c)
 {

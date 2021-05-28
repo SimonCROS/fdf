@@ -23,9 +23,6 @@ void	**as_arrayf(t_list *list)
 
 	array = as_array(list);
 	if (list)
-	{
 		lst_free(list);
-		free(list);
-	}
 	return (array);
 }

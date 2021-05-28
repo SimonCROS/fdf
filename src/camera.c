@@ -1,21 +1,6 @@
 #include <math.h>
 #include "minirt.h"
 
-t_camera	*parse_camera(t_list *data, t_vec3f origin)
-{
-	t_vec3f	pos;
-	t_vec3f	rot;
-	int		fov;
-
-	if (!args_size(lst_first(data), data->size, 4))
-		return (NULL);
-	if (!vec_deserialize((char *)lst_get(data, 1), &pos)
-		|| !dir_deserialize((char *)lst_get(data, 2), &rot)
-		|| !bounded_int_deserialize((char *)lst_get(data, 3), &fov, 0, 180))
-		return (NULL);
-	return (new_camera(vec3_add(pos, origin), rot, fov));
-}
-
 static t_matrix44	look_at(t_vec3f from, t_vec3f to)
 {
 	static t_vec3f	tmp = (t_vec3f){0, 1, 0};
