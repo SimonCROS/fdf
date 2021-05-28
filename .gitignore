@@ -1,0 +1,15 @@
+.vscode
+.DS_Store
+miniRT
+*.o
+*.a
+*.dylib
+*.swiftdoc
+*.swiftmodule
+*.bmp
+*.dSYM
+
+scenes/elements/marvel/
+scenes/marvel.rt
+
+test
