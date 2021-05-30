@@ -11,9 +11,7 @@ int	ft_atohex_full(char *str, int *result)
 
 	ret = 0;
 	if (ft_starts_with(str, "0x"))
-	{
 		str += 2;
-	}
 	while ((*str >= '0' && *str <= '9') || (*str >= 'a' && *str <= 'f'))
 	{
 		ret *= 16;
@@ -40,7 +38,11 @@ char	**ft_split_first(char *s, char c)
 	i = ft_strindex_of(s, c);
 	parts[1] = NULL;
 	if (i == -1)
-		parts[0] = s;
+	{
+		parts[0] = ft_strdup(s);
+		if (!parts[0])
+			free(parts);
+	}
 	else
 	{
 		parts[0] = ft_substr(s, 0, i);

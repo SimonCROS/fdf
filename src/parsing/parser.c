@@ -45,7 +45,11 @@ static void	*to_vertex(char *str)
 	t_vertex	*vertex;
 
 	if (!parse_vertex_attrs(&color, &y, str))
+	{
+		free(str);
 		return (NULL);
+	}
+	free(str);
 	vertex = malloc(sizeof(t_vertex));
 	if (!vertex)
 		return (NULL);
