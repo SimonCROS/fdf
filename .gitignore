@@ -1,6 +1,6 @@
 .vscode
 .DS_Store
-miniRT
+fdf
 *.o
 *.a
 *.dylib
