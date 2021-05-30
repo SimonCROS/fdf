@@ -134,11 +134,7 @@ t_vertex_map	*parse(char *file)
 	t_vertex_map	*map;
 
 	if (ft_strlen(file) < 5 || !ft_ends_with(file, ".fdf"))
-	{
-		errno = -1;
-		log_msg(ERROR, "File is not a \".fdf\" file.");
 		return (NULL);
-	}
 	if (!file)
 		return (NULL);
 	map = malloc(sizeof(t_vertex_map));

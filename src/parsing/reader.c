@@ -12,10 +12,7 @@ static t_read_status	read_line(t_list *nds, int fd)
 	if (result < 0)
 		return (READ_ERROR);
 	else if (!lst_unshift(nds, as_listf((void **)ft_splitf(buffer, ' '), free)))
-	{
-		errno = -1;
 		return (READ_ERROR);
-	}
 	if (result == 0)
 		return (READ_EOF);
 	return (READ_SUCCESS);

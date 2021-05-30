@@ -52,7 +52,6 @@ override SRCS		:=									\
 				impl/mlx/hook/mouse_hook.c				\
 				impl/mlx/hook/close_hook.c				\
 				impl/mlx/event/on_scroll.c				\
-				util/logs.c								\
 				util/utils.c							\
 				graphic/vector3f/add.c					\
 				graphic/vector3f/angle.c				\

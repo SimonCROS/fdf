@@ -1,9 +1,6 @@
 #ifndef FDF_H
 # define FDF_H
 
-# include <errno.h>
-# include <stdio.h>
-
 # include "libft.h"
 # include "graphics.h"
 
@@ -67,8 +64,6 @@
 /*** Types ********************************************************************/
 
 typedef struct s_vars		t_vars;
-
-typedef enum e_log_type		t_log_type;
 
 typedef struct s_vertex_map	t_vertex_map;
 typedef struct s_vertex		t_vertex;
@@ -245,22 +240,6 @@ struct s_gnl_entry
 char			**ft_gnl_split(char *s, char c);
 int				get_next_line(int fd, char **line);
 int				gnl_init(char ***current, char **tmp_line, ssize_t *result);
-
-/*** Logs utils ***************************************************************/
-
-enum e_log_type
-{
-	INFO,
-	WARN,
-	ERROR,
-	FATAL
-};
-
-int				log_nl(void);
-int				log_cr(void);
-int				log_prev_line(void);
-int				log_msg_arg(t_log_type type, char *str, const char *arg);
-int				log_msg(t_log_type type, char *str);
 
 /*** Misc ********************************************************************/
 

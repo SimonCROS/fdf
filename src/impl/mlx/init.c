@@ -48,12 +48,7 @@ void	init_window(char *file, t_vertex_map *map)
 	vars.camera = NULL;
 	vars.z_buffer = NULL;
 	if (!init_mlx(&vars, file))
-	{
-		errno = -1;
-		perror("Error\nCan't generate the frame");
 		exit_fdf(&vars, EXIT_FAILURE);
-		return ;
-	}
 	vars.init_image = (t_fun)mlx_init_image;
 	vars.set_pixel = (t_pixel_writer)mlx_set_pixel;
 	vars.on_finished = (t_bicon)force_put_image;
