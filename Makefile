@@ -34,11 +34,11 @@ override INCLUDES	:= -I$(INC) -I$(LIBFT_DIR)/$(INC) -I$(MINILIBX_DIR)
 override SRCS		:=									\
 				main.c									\
 				exit.c									\
+				camera.c								\
 				parsing/parser.c						\
 				parsing/reader.c						\
 				parsing/gnl/get_next_line.c				\
 				parsing/gnl/get_next_line_utils.c		\
-				camera.c								\
 				engine/project.c						\
 				engine/renderer.c						\
 				impl/mlx/image.c						\
@@ -51,6 +51,7 @@ override SRCS		:=									\
 				impl/mlx/hook/close_hook.c				\
 				impl/mlx/event/on_scroll.c				\
 				util/logs.c								\
+				util/utils.c							\
 				graphic/vector3f/add.c					\
 				graphic/vector3f/angle.c				\
 				graphic/vector3f/cross.c				\

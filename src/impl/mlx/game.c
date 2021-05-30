@@ -10,20 +10,34 @@ static void	compute_move_keys_flat(t_vars *vars)
 	t_camera		*c;
 
 	c = vars->camera;
+	// if (vars->up)
+	// 	c->position = vec3_add(c->position, vec3_muld(up, 0.5));
+	// if (vars->down)
+	// 	c->position = vec3_sub(c->position, vec3_muld(up, 0.5));
+	// if (vars->forward)
+	// 	c->position = vec3_add(c->position, vec3_muld(c->flat, 0.5));
+	// if (vars->backward)
+	// 	c->position = vec3_sub(c->position, vec3_muld(c->flat, 0.5));
+	// if (vars->left)
+	// 	c->position = vec3_sub(c->position,
+	// 			vec3_muld(vec3_cross(c->flat, up), 0.5));
+	// if (vars->right)
+	// 	c->position = vec3_add(c->position,
+	// 			vec3_muld(vec3_cross(c->flat, up), 0.5));
 	if (vars->up)
-		c->position = vec3_add(c->position, vec3_muld(up, 0.5));
+		c->position = vec3_add(c->position, vec3_muld(up, 0.1));
 	if (vars->down)
-		c->position = vec3_sub(c->position, vec3_muld(up, 0.5));
+		c->position = vec3_sub(c->position, vec3_muld(up, 0.1));
 	if (vars->forward)
-		c->position = vec3_add(c->position, vec3_muld(c->flat, 0.5));
+		c->position = vec3_add(c->position, vec3_muld(c->flat, 0.1));
 	if (vars->backward)
-		c->position = vec3_sub(c->position, vec3_muld(c->flat, 0.5));
+		c->position = vec3_sub(c->position, vec3_muld(c->flat, 0.1));
 	if (vars->left)
 		c->position = vec3_sub(c->position,
-				vec3_muld(vec3_cross(c->flat, up), 0.5));
+				vec3_muld(vec3_cross(c->flat, up), 0.1));
 	if (vars->right)
 		c->position = vec3_add(c->position,
-				vec3_muld(vec3_cross(c->flat, up), 0.5));
+				vec3_muld(vec3_cross(c->flat, up), 0.1));
 }
 
 static void	compute_move_keys(t_vars *vars)
@@ -32,14 +46,22 @@ static void	compute_move_keys(t_vars *vars)
 
 	c = vars->camera;
 	compute_move_keys_flat(vars);
+	// if (vars->cam_left)
+	// 	c->direction = vec3_rotate_y(c->direction, M_PI / 180);
+	// if (vars->cam_right)
+	// 	c->direction = vec3_rotate_y(c->direction, -M_PI / 180);
+	// if (vars->cam_up)
+	// 	c->direction = vec3_rotate_axis(c->direction, c->right, M_PI / 180);
+	// if (vars->cam_down)
+	// 	c->direction = vec3_rotate_axis(c->direction, c->right, -M_PI / 180);
 	if (vars->cam_left)
-		c->direction = vec3_rotate_y(c->direction, M_PI / 180);
+		c->direction = vec3_rotate_y(c->direction, M_PI / 900);
 	if (vars->cam_right)
-		c->direction = vec3_rotate_y(c->direction, -M_PI / 180);
+		c->direction = vec3_rotate_y(c->direction, -M_PI / 900);
 	if (vars->cam_up)
-		c->direction = vec3_rotate_axis(c->direction, c->right, M_PI / 180);
+		c->direction = vec3_rotate_axis(c->direction, c->right, M_PI / 900);
 	if (vars->cam_down)
-		c->direction = vec3_rotate_axis(c->direction, c->right, -M_PI / 180);
+		c->direction = vec3_rotate_axis(c->direction, c->right, -M_PI / 900);
 	if (vars->cam_left || vars->cam_right || vars->cam_up || vars->cam_down)
 		reload_camera(c);
 	if (vars->up || vars->down || vars->left || vars->right || vars->forward

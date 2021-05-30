@@ -48,7 +48,6 @@ int	read_file(char *file, t_list *nodes)
 	fd = open(file, O_RDONLY);
 	if (fd < 0 || !read_lines(nodes, file, fd))
 	{
-		lst_destroy(nodes);
 		close(fd);
 		return (FALSE);
 	}

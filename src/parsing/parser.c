@@ -21,6 +21,7 @@ static void	*to_vertex(char *str)
 	if (!vertex)
 		return (NULL);
 	vertex->position.y = y;
+	vertex->color = color_new(255, 255, 255);
 	return (vertex);
 }
 
@@ -36,7 +37,7 @@ static int	fill_map(t_vertex_map *map, t_list *nodes, int width)
 	map->height = nodes->size;
 	map->vertexs = malloc(sizeof(t_vertex) * map->width * map->height);
 	if (!map->vertexs)
-		return (0);
+		return (FALSE);
 	iter_y = iterator_new(nodes);
 	y = map->height;
 	while (iterator_has_next(&iter_y))
@@ -46,9 +47,14 @@ static int	fill_map(t_vertex_map *map, t_list *nodes, int width)
 		y--;
 		x = 0;
 		while (iterator_has_next(&iter_x))
+		{
 			map->vertexs[x + y * width] = *(t_vertex *)iterator_next(&iter_x);
+			map->vertexs[x + y * width].position.x = x;
+			map->vertexs[x + y * width].position.z = y;
+			x++;
+		}
 	}
-	return (1);
+	return (TRUE);
 }
 
 static int	parse_map(t_vertex_map *map, t_list *nodes)
