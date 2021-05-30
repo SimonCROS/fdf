@@ -1,21 +1,12 @@
-#include "minirt.h"
+#include "fdf.h"
 
-#include "tpool.h"
-
-static void	free_camera_render(t_camera *camera, t_vars *vars)
+void	exit_fdf(t_vars *vars, void *other, int __status)
 {
-	if (camera->z_buffer)
-		free(camera->z_buffer);
-	if (camera->render)
-		vars->free_image(camera->render, vars);
-}
-
-void	exit_minirt(t_vars *vars, t_tpool *pool, void *other, int __status)
-{
-	lst_foreachp(vars->scene->cameras, (t_bicon)free_camera_render, vars);
+	if (vars->render)
+		vars->free_image(vars->render, vars);
+	free(vars->camera);
 	vars->on_exit(vars);
-	tpool_free(pool);
-	free_scene(vars->scene);
+	free_map(vars->map);
 	free(other);
 	exit(__status);
 }

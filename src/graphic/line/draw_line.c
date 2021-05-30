@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "fdf.h"
 #include "graphics.h"
 
 void	draw_line(t_vars *vars, t_line ln, t_color color)
@@ -13,9 +13,9 @@ void	draw_line(t_vars *vars, t_line ln, t_color color)
 	err = d.x + d.y;
 	while (ln.from.x != ln.to.x || ln.from.y != ln.to.y)
 	{
-		if (ln.from.x >= 0 && ln.from.x < vars->scene->render->width
-			&& ln.from.y >= 0 && ln.from.y < vars->scene->render->height)
-			vars->set_pixel(vars->camera->render, ln.from.x, ln.from.y, color);
+		if (ln.from.x >= 0 && ln.from.x < WIDTH
+			&& ln.from.y >= 0 && ln.from.y < HEIGHT)
+			vars->set_pixel(vars->render, ln.from.x, ln.from.y, color);
 		e2 = 2 * err;
 		if (e2 >= d.y)
 		{

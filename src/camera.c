@@ -1,5 +1,5 @@
 #include <math.h>
-#include "minirt.h"
+#include "fdf.h"
 
 static t_matrix44	look_at(t_vec3f from, t_vec3f to)
 {
@@ -56,7 +56,5 @@ t_camera	*new_camera(t_vec3f position, t_vec3f direction, float fov)
 	camera->direction = direction;
 	reload_camera(camera);
 	camera->hlen = tan(fov * 0.5 * M_PI / 180);
-	camera->render = NULL;
-	camera->z_buffer = NULL;
 	return (camera);
 }

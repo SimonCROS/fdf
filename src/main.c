@@ -4,7 +4,6 @@ int	main(int argc, char **argv)
 {
 	t_vertex_map	*map;
 
-	pthread_setname_ft("MAIN");
 	log_msg(INFO, "Starting program...");
 	if (argc != 2)
 	{

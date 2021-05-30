@@ -1,4 +1,4 @@
-LINUX				:= 1
+LINUX				:= 0
 
 # Folders
 
@@ -20,7 +20,7 @@ endif
 
 # Properties
 
-NAME				= miniRT
+NAME				= fdf
 
 # Commands
 
@@ -35,37 +35,11 @@ override SRCS		:=									\
 				main.c									\
 				exit.c									\
 				parsing/parser.c						\
-				parsing/reader.c						\
-				parsing/node_parser.c					\
-				parsing/misc_parser.c					\
 				parsing/gnl/get_next_line.c				\
 				parsing/gnl/get_next_line_utils.c		\
-				element/camera.c						\
-				element/archetype/plane.c				\
-				element/archetype/light.c				\
-				element/archetype/object.c				\
-				element/archetype/quadric.c				\
-				element/archetype/compound.c			\
-				element/light/point.c					\
-				element/light/laser.c					\
-				element/plane/plane.c					\
-				element/plane/circle.c					\
-				element/plane/square.c					\
-				element/plane/triangle.c				\
-				element/quadric/cylinder.c				\
-				element/quadric/hyperboloid.c			\
-				element/quadric/sphere.c				\
-				element/compound/cube.c					\
-				element/compound/pyramid.c				\
-				engine/ray.c							\
+				camera.c								\
 				engine/project.c						\
-				engine/z_buffer.c						\
 				engine/renderer.c						\
-				engine/collision.c						\
-				engine/thread_worker.c					\
-				engine/chunk_worker.c					\
-				engine/engine_manager.c					\
-				impl/bmp/bmp.c							\
 				impl/mlx/image.c						\
 				impl/mlx/init.c							\
 				impl/mlx/game.c							\
@@ -74,16 +48,8 @@ override SRCS		:=									\
 				impl/mlx/hook/key_hook.c				\
 				impl/mlx/hook/mouse_hook.c				\
 				impl/mlx/hook/close_hook.c				\
-				impl/mlx/event/on_drag.c				\
-				impl/mlx/event/on_click.c				\
 				impl/mlx/event/on_scroll.c				\
-				impl/mlx/event/on_change_camera.c		\
-				provider/debug_mode_provider.c			\
 				util/logs.c								\
-				util/utils.c							\
-				util/scene.c							\
-				util/deserializers.c					\
-				util/deserializers2.c					\
 				graphic/vector3f/add.c					\
 				graphic/vector3f/angle.c				\
 				graphic/vector3f/cross.c				\
@@ -108,15 +74,13 @@ override SRCS		:=									\
 				graphic/bounding_box/new.c				\
 				graphic/bounding_box/intersecions.c		\
 				graphic/line/new.c						\
-				graphic/draw_line.c						\
+				graphic/line/draw_line.c				\
 
 override OBJS		:= $(addprefix $(BIN)/, $(SRCS:.c=.o))
 
 override HEADERS	:= $(addprefix $(INC)/,				\
-				minirt.h								\
+				fdf.h									\
 				graphics.h								\
-				object.h								\
-				renderer.h								\
 				)
 
 LIBRARIES	:= -lpthread

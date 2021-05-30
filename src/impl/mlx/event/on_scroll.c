@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "fdf.h"
 
 int	on_scroll(t_vars *vars, int direction)
 {

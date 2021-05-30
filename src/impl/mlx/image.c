@@ -1,6 +1,6 @@
 #include "mlx.h"
 
-#include "minirt.h"
+#include "fdf.h"
 
 void	mlx_free_image(t_image *image, t_vars *vars)
 {
@@ -19,14 +19,14 @@ void	mlx_set_pixel(t_image *data, int x, int y, t_color color)
 	*(unsigned int *)dst = color_to_hex(color);
 }
 
-t_image	*mlx_init_image(t_vars *vars, t_options *params)
+t_image	*mlx_init_image(t_vars *vars)
 {
 	t_image	*img;
 
 	img = malloc(sizeof(t_image));
 	if (!img)
 		return (NULL);
-	img->img = mlx_new_image(vars->mlx, params->width, params->height);
+	img->img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	if (!img->img)
 	{
 		free(img);

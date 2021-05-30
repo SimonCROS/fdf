@@ -11,6 +11,9 @@
 
 # define BUFF_SIZE 50
 
+# define WIDTH 500
+# define HEIGHT 500
+
 # ifdef __APPLE__
 #  define K_LEFT 123
 #  define K_RIGHT 124
@@ -82,6 +85,8 @@ typedef enum e_read_status	t_read_status;
 
 /*** Mlx implementation *******************************************************/
 
+/*** Mlx implementation *******************************************************/
+
 struct s_image
 {
 	void	*img;
@@ -117,6 +122,30 @@ enum e_click_type
 };
 # endif
 
+void		launch_game(t_vars *vars);
+void		init_window(char *file, t_vertex_map *map);
+void		force_put_image(t_vars *vars, t_image *image);
+void		init_window_size(t_vars *vars);
+t_image		*mlx_init_image(t_vars *vars);
+void		mlx_set_pixel(t_image *image, int x, int y, t_color color);
+
+void		mlx_free_image(t_image *image, t_vars *vars);
+
+void		mlx_exit(t_vars *vars);
+void		reset_keys(t_vars *vars);
+
+/*== Hooks ==*/
+
+int			key_pressed_hook(int key, t_vars *vars);
+int			key_released_hook(int key, t_vars *vars);
+int			mouse_pressed_hook(int button, int x, int y, t_vars *vars);
+int			close_hook(t_vars *vars);
+
+/*== Events ==*/
+
+int			on_close(t_vars *vars);
+int			on_scroll(t_vars *vars, int direction);
+
 /*** General ******************************************************************/
 
 struct s_vars
@@ -125,17 +154,32 @@ struct s_vars
 	void			*win;
 	t_vertex_map	*map;
 	t_camera		*camera;
-	t_bifunction	init_image;
+	t_function		init_image;
 	t_pixel_writer	set_pixel;
 	t_biconsumer	on_finished;
 	t_biconsumer	free_image;
 	t_consumer		on_exit;
+	t_bounding_box	screen;
+	int				flush;
+	int				forward;
+	int				backward;
+	int				left;
+	int				right;
+	int				up;
+	int				down;
+	int				scroll_direction;
+	int				click_type;
+	int				cam_left;
+	int				cam_right;
+	int				cam_up;
+	int				cam_down;
+	void			*render;
 };
 
 struct s_vertex
 {
-	t_color		color;
 	t_vector3f	position;
+	t_color		color;
 };
 
 struct s_vertex_map
@@ -146,6 +190,31 @@ struct s_vertex_map
 };
 
 t_vertex_map	*parse(char *file);
+void			*free_map(t_vertex_map *map);
+
+void			exit_fdf(t_vars *vars, void *other, int __status);
+
+/*** Engine *******************************************************************/
+
+int				render(t_vars *vars);
+void			project(t_vars *vars, t_vertex v1, t_vertex v2);
+
+/*** Camera *******************************************************************/
+
+struct s_camera
+{
+	t_vec3f		position;
+	t_vec3f		direction;
+	t_vec3f		flat;
+	t_vec3f		right;
+	t_vec3f		up;
+	t_matrix44	c2w;
+	t_matrix44	w2c;
+	float		hlen;
+};
+
+t_camera	*new_camera(t_vec3f position, t_vec3f direction, float fov);
+void		reload_camera(t_camera *camera);
 
 /*** Parsing utils ************************************************************/
 
@@ -176,7 +245,6 @@ enum e_log_type
 	INFO,
 	WARN,
 	ERROR,
-	DEBUG,
 	FATAL
 };
 
@@ -185,7 +253,10 @@ int				log_cr(void);
 int				log_prev_line(void);
 int				log_msg_arg(t_log_type type, char *str, const char *arg);
 int				log_msg(t_log_type type, char *str);
-int				is_debug_enabled(void);
-int				set_debug(int debug);
+
+
+/*** Misc ********************************************************************/
+
+void			draw_line(t_vars *vars, t_line ln, t_color color);
 
 #endif

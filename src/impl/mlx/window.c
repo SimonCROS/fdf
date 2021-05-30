@@ -1,6 +1,6 @@
 #include "mlx.h"
 
-#include "minirt.h"
+#include "fdf.h"
 
 #if defined __APPLE__
 
@@ -26,20 +26,11 @@ void	mlx_exit(t_vars *vars)
 
 #endif
 
-void	init_window_size(t_vars *vars, t_scene *scene)
+void	init_window_size(t_vars *vars)
 {
 	int		max_width;
 	int		max_height;
 
 	mlx_get_screen_size(vars->mlx, &max_width, &max_height);
-	if (max_width > 0 && scene->render->width > max_width)
-	{
-		scene->render->width = max_width;
-		log_msg(WARN, "Width too long, using the window width.");
-	}
-	if (max_height > 0 && scene->render->height > max_height)
-	{
-		scene->render->height = max_height;
-		log_msg(WARN, "Height too long, using the window height.");
-	}
+	vars->screen = bounding_box_from((t_vec2i){}, (t_vec2i){WIDTH, HEIGHT});
 }

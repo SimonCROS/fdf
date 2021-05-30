@@ -1,49 +1,12 @@
-#include "minirt.h"
+#include "fdf.h"
 
-static void	change_camera(t_vars *vars, t_camera *camera, int i, t_scene *scene)
+int	key_pressed_hook(int i, t_vars *vars)
 {
-	if (i == K_O)
-		scene->index--;
-	if (i == K_P)
-		scene->index++;
-	scene->index %= scene->cameras->size;
-	if (scene->index < 0)
-		scene->index = scene->cameras->size + scene->index;
-	vars->camera = (t_camera *)lst_get(scene->cameras, scene->index);
-	on_change_camera(vars, camera, vars->camera);
-}
+	t_vertex_map	*map;
 
-static void	toggle_option(t_vars *vars, t_camera *camera, int i, t_scene *scene)
-{
-	if (i == K_M)
-		camera->shadows = !camera->shadows;
-	else if (i == K_V)
-		camera->normal_disruption = !camera->normal_disruption;
-	else if (i == K_U)
-		camera->sphere_up_map = !camera->sphere_up_map;
-	else if (i == K_B)
-		camera->color_disruption = !camera->color_disruption;
-	else if (i == K_N)
-		camera->show_triangles = !camera->show_triangles;
-	else if (i == K_X)
-		camera->sepia = !camera->sepia;
-	else if (i == K_C)
-	{
-		if (scene->triangles->size)
-		{
-			log_msg(WARN, "Antialiasing can't be enabled with triangles.");
-			return ;
-		}
-		if (scene->render->samples == 1)
-			scene->render->samples = 4;
-		else
-			scene->render->samples = 1;
-	}
-	vars->flush = 1;
-}
-
-static void	move_pressed(t_vars *vars, int i)
-{
+	map = vars->map;
+	if (i == K_ESC)
+		exit_fdf(vars, NULL, EXIT_SUCCESS);
 	if (i == K_W)
 		vars->forward = 1;
 	else if (i == K_S)
@@ -64,34 +27,6 @@ static void	move_pressed(t_vars *vars, int i)
 		vars->cam_up = 1;
 	else if (i == K_DOWN)
 		vars->cam_down = 1;
-}
-
-int	key_pressed_hook(int i, t_vars *vars)
-{
-	t_scene		*scene;
-
-	scene = vars->scene;
-	if (i == K_ESC)
-		exit_minirt(vars, NULL, NULL, EXIT_SUCCESS);
-	else if (i == K_F)
-		set_debug(!is_debug_enabled());
-	else if (!vars->camera && i == K_ENTER)
-	{
-		vars->camera = (t_camera *)lst_first(scene->cameras);
-		return (on_change_camera(vars, NULL, vars->camera));
-	}
-	else if (vars->camera)
-	{
-		if (scene->cameras->size > 1 && (i == K_O || i == K_P))
-			change_camera(vars, vars->camera, i, scene);
-		else if (i == K_W || i == K_S || i == K_A || i == K_D || i == K_ESP
-			|| i == K_LSHIFT || i == K_LEFT || i == K_RIGHT || i == K_UP
-			|| i == K_DOWN)
-			move_pressed(vars, i);
-		else if (i == K_B || i == K_C || i == K_U || i == K_V || i == K_X
-			|| i == K_M || i == K_N)
-			toggle_option(vars, vars->camera, i, scene);
-	}
 	return (0);
 }
 
