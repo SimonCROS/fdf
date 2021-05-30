@@ -44,11 +44,14 @@ void	init_window(char *file, t_vertex_map *map)
 
 	vars.on_exit = (t_con)mlx_exit;
 	vars.map = map;
+	vars.render = NULL;
+	vars.camera = NULL;
+	vars.z_buffer = NULL;
 	if (!init_mlx(&vars, file))
 	{
 		errno = -1;
 		perror("Error\nCan't generate the frame");
-		exit_fdf(&vars, NULL, EXIT_FAILURE);
+		exit_fdf(&vars, EXIT_FAILURE);
 		return ;
 	}
 	vars.init_image = (t_fun)mlx_init_image;
@@ -56,7 +59,10 @@ void	init_window(char *file, t_vertex_map *map)
 	vars.on_finished = (t_bicon)force_put_image;
 	vars.free_image = (t_bicon)mlx_free_image;
 	vars.flush = 1;
-	vars.camera = NULL;
-	vars.render = NULL;
+	vars.render = vars.init_image(&vars);
+	vars.camera = new_camera(vec3_new(0, 30, 50), vec3_new(0, -1, -1), 60);
+	vars.z_buffer = malloc(WIDTH * HEIGHT * sizeof(float));
+	if (!vars.camera || !vars.render || !vars.z_buffer)
+		exit_fdf(&vars, EXIT_FAILURE);
 	launch_game(&vars);
 }

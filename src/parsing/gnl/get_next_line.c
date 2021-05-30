@@ -71,7 +71,7 @@ static ssize_t	read_line(int fd, char **line, char ***current,
 		return (-1);
 	free(*current);
 	remain->content[result] = 0;
-	*current = ft_split_first(remain->content, '\n');
+	*current = ft_gnl_split(remain->content, '\n');
 	if (!*current)
 		return (-1);
 	tmp = *line;
@@ -87,7 +87,7 @@ static int	load_remain(t_gnl_entry *remain, char **line, char ***current)
 {
 	if (remain->content)
 	{
-		*current = ft_split_first(remain->content, '\n');
+		*current = ft_gnl_split(remain->content, '\n');
 		if (!*current)
 			return (-1);
 		free(*line);

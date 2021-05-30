@@ -38,5 +38,6 @@ void	project(t_vars *vars, t_vertex v1, t_vertex v2)
 		return ;
 	box = bounding_box_fromf(p[0], p[1]);
 	if (bounding_box_intersects(box, vars->screen))
-		draw_line(vars, line_fromf(p[0], p[1]), v1.color);
+		draw_line(vars, line_fromf(p[0], p[1]), v1.color,
+			vec3_distance_squared(vars->camera->position, v1.position));
 }

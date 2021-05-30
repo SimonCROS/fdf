@@ -160,6 +160,8 @@ struct s_vars
 	t_biconsumer	free_image;
 	t_consumer		on_exit;
 	t_bounding_box	screen;
+	t_image			*render;
+	float			*z_buffer;
 	int				flush;
 	int				forward;
 	int				backward;
@@ -173,7 +175,6 @@ struct s_vars
 	int				cam_right;
 	int				cam_up;
 	int				cam_down;
-	void			*render;
 };
 
 struct s_vertex
@@ -195,12 +196,16 @@ int				read_file(char *file, t_list *nodes);
 
 t_vertex		get_vertex(t_vertex_map *map, int x, int y);
 
-void			exit_fdf(t_vars *vars, void *other, int __status);
+void			exit_fdf(t_vars *vars, int __status);
 
 /*** Engine *******************************************************************/
 
 int				render(t_vars *vars);
 void			project(t_vars *vars, t_vertex v1, t_vertex v2);
+void			draw_line(t_vars *vars, t_line ln, t_color color, float dist);
+
+void			fill_z_buff(float *z_buffer, size_t length);
+float			*get_z_buffer_value(float *z_buffer, int x, int y, int width);
 
 /*** Camera *******************************************************************/
 
@@ -237,7 +242,7 @@ struct s_gnl_entry
 	char	*content;
 };
 
-char			**ft_split_first(char *s, char c);
+char			**ft_gnl_split(char *s, char c);
 int				get_next_line(int fd, char **line);
 int				gnl_init(char ***current, char **tmp_line, ssize_t *result);
 
@@ -259,6 +264,7 @@ int				log_msg(t_log_type type, char *str);
 
 /*** Misc ********************************************************************/
 
-void			draw_line(t_vars *vars, t_line ln, t_color color);
+int				ft_atohex_full(char *str, int *result);
+char			**ft_split_first(char *s, char c);
 
 #endif

@@ -1,6 +1,6 @@
 #include "fdf.h"
 
-char	**ft_split_first(char *s, char c)
+char	**ft_gnl_split(char *s, char c)
 {
 	char	**parts;
 	int		i;

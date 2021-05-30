@@ -21,7 +21,7 @@ static t_read_status	read_line(t_list *nds, int fd)
 	return (READ_SUCCESS);
 }
 
-static int	read_lines(t_list *nodes, char *file, int fd)
+static int	read_lines(t_list *nodes, int fd)
 {
 	t_read_status	result;
 	int				reading;
@@ -30,11 +30,6 @@ static int	read_lines(t_list *nodes, char *file, int fd)
 	reading = 0;
 	while (result == READ_SUCCESS)
 	{
-		if (!(reading % 1000))
-		{
-			log_msg_arg(INFO, "\033[33m< Reading\033[0m %s...", file);
-			log_prev_line();
-		}
 		reading++;
 		result = read_line(nodes, fd);
 	}
@@ -46,7 +41,7 @@ int	read_file(char *file, t_list *nodes)
 	int	fd;
 
 	fd = open(file, O_RDONLY);
-	if (fd < 0 || !read_lines(nodes, file, fd))
+	if (fd < 0 || !read_lines(nodes, fd))
 	{
 		close(fd);
 		return (FALSE);

@@ -41,6 +41,8 @@ override SRCS		:=									\
 				parsing/gnl/get_next_line_utils.c		\
 				engine/project.c						\
 				engine/renderer.c						\
+				engine/draw_line.c						\
+				engine/z_buffer.c						\
 				impl/mlx/image.c						\
 				impl/mlx/init.c							\
 				impl/mlx/game.c							\
@@ -76,7 +78,6 @@ override SRCS		:=									\
 				graphic/bounding_box/new.c				\
 				graphic/bounding_box/intersecions.c		\
 				graphic/line/new.c						\
-				graphic/line/draw_line.c				\
 
 override OBJS		:= $(addprefix $(BIN)/, $(SRCS:.c=.o))
 
