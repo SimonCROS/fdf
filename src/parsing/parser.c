@@ -4,73 +4,90 @@
 
 void	*free_map(t_vertex_map *map)
 {
-	int	line;
-
-	line = 0;
 	if (map)
-	{
-		if (map->vertexs)
-			while (line < map->height)
-				free(map->vertexs[line++]);
 		free(map->vertexs);
-	}
 	free(map);
 	return (NULL);
 }
 
-// static t_read_status	read_line(t_list *lne, int fd)
-// {
-// 	int		result;
-// 	char	*buffer;
+static void	*to_vertex(char *str)
+{
+	int			y;
+	t_vertex	*vertex;
 
-// 	buffer = NULL;
-// 	result = get_next_line(fd, &buffer);
-// 	if (result < 0)
-// 		return (READ_ERROR);
-// 	if (*buffer == '#')
-// 		free(buffer);
-// 	else if (!lst_unshift(lne, as_listf((void **)ft_splitf(buffer, ' '), free)))
-// 	{
-// 		errno = -1;
-// 		return (READ_ERROR);
-// 	}
-// 	if (result == 0)
-// 		return (READ_EOF);
-// 	return (READ_SUCCESS);
-// }
+	if (!ft_atoi_full(str, &y))
+		return (NULL);
+	vertex = malloc(sizeof(t_vertex));
+	if (!vertex)
+		return (NULL);
+	vertex->position.y = y;
+	return (vertex);
+}
 
-// static int	parse_lines(t_list **vertexs, int fd)
-// {
-// 	int	width;
+static int	fill_map(t_vertex_map *map, t_list *nodes, int width)
+{
+	t_list		*line;
+	t_iterator	iter_y;
+	t_iterator	iter_x;
+	int			x;
+	int			y;
 
-// 	width = 0;
-// 	while (get_next_line())
-// 	{
-// 		/* code */
-// 	}
-// }
+	map->width = width;
+	map->height = nodes->size;
+	map->vertexs = malloc(sizeof(t_vertex) * map->width * map->height);
+	if (!map->vertexs)
+		return (0);
+	iter_y = iterator_new(nodes);
+	y = map->height;
+	while (iterator_has_next(&iter_y))
+	{
+		line = (t_list *)iterator_next(&iter_y);
+		iter_x = iterator_new(line);
+		y--;
+		x = 0;
+		while (iterator_has_next(&iter_x))
+			map->vertexs[x + y * width] = *(t_vertex *)iterator_next(&iter_x);
+	}
+	return (1);
+}
+
+static int	parse_map(t_vertex_map *map, t_list *nodes)
+{
+	t_list		*line;
+	t_iterator	iterator;
+	int			width;
+	int			success;
+
+	iterator = iterator_new(nodes);
+	success = 1;
+	line = 0;
+	width = 0;
+	while (success && iterator_has_next(&iterator))
+	{
+		line = (t_list *)iterator_next(&iterator);
+		if (width && width != line->size)
+			return (FALSE);
+		width = line->size;
+		lst_map_in(line, (t_fun)to_vertex, free);
+		success = !lst_contains(line, NULL, NULL);
+	}
+	lst_filter_in(nodes, (t_pre)lst_not_empty);
+	if (success && width)
+		success = fill_map(map, nodes, width);
+	return (success && width);
+}
 
 static int	parse_file(t_vertex_map *map, char *file)
 {
-	// int		fd;
-	// t_list	**vertexs;
+	t_list		*nodes;
+	int			success;
 
-	// vertexs = lst_new(lst_destroy);
-	// if (vertexs)
-	// 	return (FALSE);
-	// fd = open(file, O_RDONLY);
-	// if (fd < 0 || !parse_lines(vertexs, fd))
-	// {
-	// 	lst_destroy(vertexs);
-	// 	close(fd);
-	// 	return (FALSE);
-	// }
-	// close(fd);
-
-	(void)map;
-	(void)file;
-
-	return (TRUE);
+	nodes = lst_new((t_con)lst_destroy);
+	if (!nodes)
+		return (FALSE);
+	success = read_file(file, nodes) && parse_map(map, nodes);
+	lst_destroy(nodes);
+	return (success);
 }
 
 t_vertex_map	*parse(char *file)

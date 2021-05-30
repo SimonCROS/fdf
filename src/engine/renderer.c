@@ -3,11 +3,9 @@
 int	render(t_vars *vars)
 {
 	t_vertex_map	*map;
-	t_camera		*camera;
 
 	map = vars->map;
-	camera = vars->camera;
-
+	(void)map;
 	t_vec3f v1 = vec3_new(0,0,0);
 	t_vec3f v2 = vec3_new(2,0,0);
 	t_vec3f v3 = vec3_new(2,0,2);

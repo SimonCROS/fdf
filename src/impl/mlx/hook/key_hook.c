@@ -2,9 +2,6 @@
 
 int	key_pressed_hook(int i, t_vars *vars)
 {
-	t_vertex_map	*map;
-
-	map = vars->map;
 	if (i == K_ESC)
 		exit_fdf(vars, NULL, EXIT_SUCCESS);
 	if (i == K_W)

@@ -589,6 +589,16 @@ void		*lst_reduce(t_list *list, void *id, t_bifunction accumulator,
  */
 void		*lst_find_first(t_list *list, t_bipredicate comparator, void *arg);
 /**
+ * @brief Tests is an item is in the list using comparator (or strict equality
+ * is comparator is NULL)
+ * 
+ * @param list the list
+ * @param item the item to find in the list
+ * @param comparator the comparator
+ * @return if the item is in the list
+ */
+int			lst_contains(t_list *list, void *item, t_comparator comparator);
+/**
  * @brief Iterate over all elements of the list and execute the visitor with the
  * element and param as parameters.
  * 

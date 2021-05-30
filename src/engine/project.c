@@ -32,7 +32,8 @@ void	project(t_vars *vars, t_vertex v1, t_vertex v2)
 	int				behind;
 
 	cam = vars->camera;
-	behind = convert_to_raster(p, vars->camera, v1.position) || convert_to_raster(p + 1, vars->camera, v2.position);
+	behind = convert_to_raster(p, cam, v1.position)
+		|| convert_to_raster(p + 1, cam, v2.position);
 	if (behind)
 		return ;
 	box = bounding_box_fromf(p[0], p[1]);

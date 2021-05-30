@@ -12,10 +12,12 @@ int	ft_atoi_full(char *str, int *result)
 	}
 	while (*str >= '0' && *str <= '9')
 	{
-		ret = ret * 10 + (*str - '0');
+		ret = ret * 10 + (*str - '0') * mul;
+		if ((ret < 0 && mul == 1) || (ret > 0 && mul == -1))
+			return (0);
 		str++;
 	}
-	*result = ret * mul;
+	*result = ret;
 	return (!(*str));
 }
 

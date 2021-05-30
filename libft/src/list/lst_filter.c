@@ -50,3 +50,25 @@ t_list	*lst_filter_in(t_list *list, t_predicate filter)
 	lst_clear(&tmp);
 	return (list);
 }
+
+int	lst_contains(t_list *list, void *item, t_comparator comparator)
+{
+	t_iterator	iterator;
+	void		*current;
+
+	if (!list)
+		return (FALSE);
+	iterator = iterator_new(list);
+	while (iterator_has_next(&iterator))
+	{
+		current = iterator_next(&iterator);
+		if (comparator)
+		{
+			if (comparator(current, item))
+				return (TRUE);
+		}
+		else if (current == item)
+			return (TRUE);
+	}
+	return (FALSE);
+}

@@ -122,29 +122,29 @@ enum e_click_type
 };
 # endif
 
-void		launch_game(t_vars *vars);
-void		init_window(char *file, t_vertex_map *map);
-void		force_put_image(t_vars *vars, t_image *image);
-void		init_window_size(t_vars *vars);
-t_image		*mlx_init_image(t_vars *vars);
-void		mlx_set_pixel(t_image *image, int x, int y, t_color color);
+void			launch_game(t_vars *vars);
+void			init_window(char *file, t_vertex_map *map);
+void			force_put_image(t_vars *vars, t_image *image);
+void			init_window_size(t_vars *vars);
+t_image			*mlx_init_image(t_vars *vars);
+void			mlx_set_pixel(t_image *image, int x, int y, t_color color);
 
-void		mlx_free_image(t_image *image, t_vars *vars);
+void			mlx_free_image(t_image *image, t_vars *vars);
 
-void		mlx_exit(t_vars *vars);
-void		reset_keys(t_vars *vars);
+void			mlx_exit(t_vars *vars);
+void			reset_keys(t_vars *vars);
 
 /*== Hooks ==*/
 
-int			key_pressed_hook(int key, t_vars *vars);
-int			key_released_hook(int key, t_vars *vars);
-int			mouse_pressed_hook(int button, int x, int y, t_vars *vars);
-int			close_hook(t_vars *vars);
+int				key_pressed_hook(int key, t_vars *vars);
+int				key_released_hook(int key, t_vars *vars);
+int				mouse_pressed_hook(int button, int x, int y, t_vars *vars);
+int				close_hook(t_vars *vars);
 
 /*== Events ==*/
 
-int			on_close(t_vars *vars);
-int			on_scroll(t_vars *vars, int direction);
+int				on_close(t_vars *vars);
+int				on_scroll(t_vars *vars, int direction);
 
 /*** General ******************************************************************/
 
@@ -184,13 +184,16 @@ struct s_vertex
 
 struct s_vertex_map
 {
-	t_vertex	**vertexs;
+	t_vertex	*vertexs;
 	int			width;
 	int			height;
 };
 
 t_vertex_map	*parse(char *file);
 void			*free_map(t_vertex_map *map);
+int				read_file(char *file, t_list *nodes);
+
+t_vertex		get_vertex(t_vertex_map *map, int x, int y);
 
 void			exit_fdf(t_vars *vars, void *other, int __status);
 
@@ -213,8 +216,8 @@ struct s_camera
 	float		hlen;
 };
 
-t_camera	*new_camera(t_vec3f position, t_vec3f direction, float fov);
-void		reload_camera(t_camera *camera);
+t_camera		*new_camera(t_vec3f position, t_vec3f direction, float fov);
+void			reload_camera(t_camera *camera);
 
 /*** Parsing utils ************************************************************/
 
@@ -253,7 +256,6 @@ int				log_cr(void);
 int				log_prev_line(void);
 int				log_msg_arg(t_log_type type, char *str, const char *arg);
 int				log_msg(t_log_type type, char *str);
-
 
 /*** Misc ********************************************************************/
 

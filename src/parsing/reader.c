@@ -1,7 +1,6 @@
 #include <fcntl.h>
 
-#include "minirt.h"
-#include "object.h"
+#include "fdf.h"
 
 static t_read_status	read_line(t_list *nds, int fd)
 {
@@ -12,8 +11,6 @@ static t_read_status	read_line(t_list *nds, int fd)
 	result = get_next_line(fd, &buffer);
 	if (result < 0)
 		return (READ_ERROR);
-	if (*buffer == '#')
-		free(buffer);
 	else if (!lst_unshift(nds, as_listf((void **)ft_splitf(buffer, ' '), free)))
 	{
 		errno = -1;
@@ -44,37 +41,14 @@ static int	read_lines(t_list *nodes, char *file, int fd)
 	return (result != READ_ERROR);
 }
 
-static int	validate(char *file, int depth)
-{
-	if (ft_strlen(file) < 4 || !ft_ends_with(file, ".rt"))
-	{
-		errno = -1;
-		log_msg(ERROR, "File is not a \".rt\" file.");
-		return (FALSE);
-	}
-	if (depth == 5)
-	{
-		errno = EWOULDBLOCK;
-		log_msg(ERROR,
-			"Maximum file depth reached, maybe you have a circular inclusion.");
-		return (FALSE);
-	}
-	return (TRUE);
-}
-
-int	read_file(char *file, int depth, t_list **nodes)
+int	read_file(char *file, t_list *nodes)
 {
 	int	fd;
 
-	if (!validate(file, depth))
-		return (FALSE);
-	*nodes = lst_new((t_con)lst_destroy);
-	if (!*nodes)
-		return (FALSE);
 	fd = open(file, O_RDONLY);
-	if (fd < 0 || !read_lines(*nodes, file, fd))
+	if (fd < 0 || !read_lines(nodes, file, fd))
 	{
-		lst_destroy(*nodes);
+		lst_destroy(nodes);
 		close(fd);
 		return (FALSE);
 	}
