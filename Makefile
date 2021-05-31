@@ -1,4 +1,4 @@
-LINUX				:= 1
+LINUX				:= 0
 
 # Folders
 
@@ -37,6 +37,7 @@ override SRCS		:=									\
 				camera.c								\
 				parsing/parser.c						\
 				parsing/reader.c						\
+				parsing/vetrex_parser.c					\
 				parsing/gnl/get_next_line.c				\
 				parsing/gnl/get_next_line_utils.c		\
 				engine/project.c						\

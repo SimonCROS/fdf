@@ -2,7 +2,8 @@
 
 #include "fdf.h"
 
-static int	convert_to_raster(t_vec2f *vertexRaster, t_camera *camera, t_vec3f vertexWorld)
+static int	convert_to_raster(t_vec2f *vertexRaster, t_camera *camera,
+		t_vec3f vertexWorld)
 {
 	t_vec3f	vertexView;
 	t_vec3f	vertexCamera;

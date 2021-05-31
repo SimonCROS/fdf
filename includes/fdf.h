@@ -185,7 +185,6 @@ struct s_vertex_map
 	int			height;
 };
 
-t_vertex_map	*parse(char *file);
 void			*free_map(t_vertex_map *map);
 int				read_file(char *file, t_list *nodes);
 
@@ -227,6 +226,9 @@ enum e_read_status
 	READ_SUCCESS,
 	READ_EOF
 };
+
+t_vertex_map	*parse(char *file);
+void			*to_vertex(char *str);
 
 /*** GNL **********************************************************************/
 

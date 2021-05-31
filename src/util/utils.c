@@ -5,6 +5,14 @@ t_vertex	get_vertex(t_vertex_map *map, int x, int y)
 	return (map->vertexs[x + y * map->width]);
 }
 
+void	*free_map(t_vertex_map *map)
+{
+	if (map)
+		free(map->vertexs);
+	free(map);
+	return (NULL);
+}
+
 int	ft_atohex_full(char *str, int *result)
 {
 	int	ret;
@@ -25,6 +33,14 @@ int	ft_atohex_full(char *str, int *result)
 	}
 	*result = ret;
 	return (!(*str));
+}
+
+static void	*ft_split_first_free(char **parts)
+{
+	free(parts[0]);
+	free(parts[1]);
+	free(parts);
+	return (NULL);
 }
 
 char	**ft_split_first(char *s, char c)
@@ -48,12 +64,7 @@ char	**ft_split_first(char *s, char c)
 		parts[0] = ft_substr(s, 0, i);
 		parts[1] = ft_strdup(s + i + 1);
 		if (!parts[0] || !parts[1])
-		{
-			free(parts[0]);
-			free(parts[1]);
-			free(parts);
-			return (NULL);
-		}
+			return (ft_split_first_free(parts));
 	}
 	return (parts);
 }
