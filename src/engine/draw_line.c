@@ -1,12 +1,28 @@
 #include "fdf.h"
 #include "graphics.h"
 
+static void	draw_line2(t_line *ln, t_vec2i d, t_vec2i s, int *err)
+{
+	int		e2;
+
+	e2 = 2 * (*err);
+	if (e2 >= d.y)
+	{
+		(*err) += d.y;
+		ln->from.x += s.x;
+	}
+	if (e2 <= d.x)
+	{
+		(*err) += d.x;
+		ln->from.y += s.y;
+	}
+}
+
 void	draw_line(t_vars *vars, t_line ln, t_color color, float dist)
 {
 	t_vec2i	d;
 	t_vec2i	s;
 	int		err;
-	int		e2;
 	float	*buf;
 
 	d = (t_vec2i){abs(ln.to.x - ln.from.x), -abs(ln.to.y - ln.from.y)};
@@ -25,16 +41,6 @@ void	draw_line(t_vars *vars, t_line ln, t_color color, float dist)
 				vars->set_pixel(vars->render, ln.from.x, ln.from.y, color);
 			}
 		}
-		e2 = 2 * err;
-		if (e2 >= d.y)
-		{
-			err += d.y;
-			ln.from.x += s.x;
-		}
-		if (e2 <= d.x)
-		{
-			err += d.x;
-			ln.from.y += s.y;
-		}
+		draw_line2(&ln, d, s, &err);
 	}
 }
